@@ -1,0 +1,10 @@
+﻿{
+    "profiles": {
+      "DownloadCleaner.App (Package)": {
+        "commandName": "MsixPackage"
+      },
+      "DownloadCleaner.App (Unpackaged)": {
+        "commandName": "Project"
+      }
+    }
+}
