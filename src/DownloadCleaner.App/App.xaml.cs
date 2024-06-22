@@ -7,8 +7,9 @@ using DownloadCleaner.App.Models;
 using DownloadCleaner.App.Notifications;
 using DownloadCleaner.App.Services;
 using DownloadCleaner.App.ViewModels;
+using DownloadCleaner.App.ViewModels.Controls;
 using DownloadCleaner.App.Views;
-
+using DownloadCleaner.App.Views.Controls;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.UI.Xaml;
@@ -72,12 +73,14 @@ public partial class App : Application
             services.AddSingleton<IFileService, FileService>();
 
             // Views and ViewModels
-            services.AddTransient<SettingsViewModel>();
-            services.AddTransient<SettingsPage>();
-            services.AddTransient<MainViewModel>();
             services.AddTransient<MainPage>();
+            services.AddSingleton<MainViewModel>();
+
+            services.AddTransient<SettingsPage>();
+            services.AddSingleton<SettingsViewModel>();
+
             services.AddTransient<ShellPage>();
-            services.AddTransient<ShellViewModel>();
+            services.AddSingleton<ShellViewModel>();
 
             // Configuration
             services.Configure<LocalSettingsOptions>(context.Configuration.GetSection(nameof(LocalSettingsOptions)));

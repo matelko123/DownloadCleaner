@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<UserControl
+    x:Class="DownloadCleaner.App.Views.Controls.CleanDirectoryControl"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:DownloadCleaner.App.Views.Controls"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:viewModel="using:DownloadCleaner.App.ViewModels.Controls"
+    d:DataContext="{d:DesignInstance viewModel:CleanDirectoryControlViewModel}"
+    mc:Ignorable="d"
+    Width="700"
+    MinHeight="100"
+    x:DefaultBindMode="OneWay">
+
+    <Grid>
+        <Button
+            Command="{Binding PickupNewDestinationCommand}"
+            Content="{Binding DestinationFolderName}"/>
+    </Grid>
+</UserControl>
