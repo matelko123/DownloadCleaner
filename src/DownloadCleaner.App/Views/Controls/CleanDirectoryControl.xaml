@@ -15,6 +15,7 @@
 
     <Grid>
         <Button Width="100" Height="35"
+            ToolTipService.ToolTip="{Binding DestinationDirectory}"
             Command="{Binding PickupNewDestinationCommand}"
             Content="{Binding DestinationFolderName}"/>
     </Grid>
