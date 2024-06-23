@@ -50,6 +50,6 @@ public partial class CleanDirectoryControlViewModel : AppViewModel
 
         // Open the picker for the user to pick a folder
         StorageFolder folder = await openPicker.PickSingleFolderAsync();
-        DestinationDirectory = folder?.Path ?? string.Empty;
+        DestinationDirectory = folder?.Path ?? DestinationDirectory;
     }
 }
