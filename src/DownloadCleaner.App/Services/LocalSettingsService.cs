@@ -5,8 +5,7 @@ using DownloadCleaner.App.Helpers;
 using DownloadCleaner.App.Models;
 
 using Microsoft.Extensions.Options;
-
-using Windows.ApplicationModel;
+using Newtonsoft.Json;
 using Windows.Storage;
 
 namespace DownloadCleaner.App.Services;
@@ -83,6 +82,55 @@ public class LocalSettingsService : ILocalSettingsService
             _settings[key] = await Json.StringifyAsync(value);
 
             await Task.Run(() => _fileService.Save(_applicationDataFolder, _localsettingsFile, _settings));
+        }
+    }
+
+
+    private void Initialize()
+    {
+        if (!_isInitialized)
+        {
+            _settings = _fileService.Read<IDictionary<string, object>>(_applicationDataFolder, _localsettingsFile) ?? new Dictionary<string, object>();
+
+            _isInitialized = true;
+        }
+    }
+    public T? ReadSettings<T>(string key)
+    {
+        if (RuntimeHelper.IsMSIX)
+        {
+            if (ApplicationData.Current.LocalSettings.Values.TryGetValue(key, out var obj))
+            {
+                return JsonConvert.DeserializeObject<T>((string)obj);
+            }
+        }
+        else
+        {
+            Initialize();
+
+            if (_settings != null && _settings.TryGetValue(key, out var obj))
+            {
+                return JsonConvert.DeserializeObject<T>((string)obj);
+            }
+        }
+
+        return default;
+    }
+    public void SaveSettings<T>(string key, T value)
+    {
+        string stringValue = JsonConvert.SerializeObject(value);
+
+        if (RuntimeHelper.IsMSIX)
+        {
+            ApplicationData.Current.LocalSettings.Values[key] = stringValue;
+        }
+        else
+        {
+            Initialize();
+
+            _settings[key] = stringValue;
+
+            _fileService.Save(_applicationDataFolder, _localsettingsFile, _settings);
         }
     }
 }

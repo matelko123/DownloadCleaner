@@ -7,7 +7,7 @@ using Microsoft.UI.Xaml.Navigation;
 
 namespace DownloadCleaner.App.ViewModels;
 
-public partial class ShellViewModel : ObservableRecipient
+public partial class ShellViewModel : AppViewModel
 {
     [ObservableProperty]
     private bool isBackEnabled;

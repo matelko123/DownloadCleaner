@@ -1,10 +1,11 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
+using DownloadCleaner.App.Models;
 using Windows.Storage;
 using Windows.Storage.Pickers;
 
 namespace DownloadCleaner.App.ViewModels.Controls;
-public partial class CleanDirectoryControlViewModel : ObservableRecipient
+public partial class CleanDirectoryControlViewModel : AppViewModel
 {
     [ObservableProperty]
     [NotifyPropertyChangedFor(nameof(DestinationFolderName))]
@@ -14,6 +15,9 @@ public partial class CleanDirectoryControlViewModel : ObservableRecipient
 
     [ObservableProperty]
     private HashSet<string> _extensions = new();
+
+    public CleanDirectoryControlViewModel(CleanDirectoryModel cleanDirectoryModel)
+        : this(cleanDirectoryModel.DestinationFolderPath, cleanDirectoryModel.Extensions.ToHashSet()) { }
 
     public CleanDirectoryControlViewModel(string destinationDirectory, HashSet<string> extensions)
         : this()

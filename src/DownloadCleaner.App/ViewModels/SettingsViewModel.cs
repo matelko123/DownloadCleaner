@@ -13,7 +13,7 @@ using Windows.ApplicationModel;
 
 namespace DownloadCleaner.App.ViewModels;
 
-public partial class SettingsViewModel : ObservableRecipient
+public partial class SettingsViewModel : AppViewModel
 {
     private readonly IThemeSelectorService _themeSelectorService;
 

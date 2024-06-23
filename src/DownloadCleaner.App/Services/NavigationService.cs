@@ -89,6 +89,12 @@ public class NavigationService : INavigationService
         {
             _frame.Tag = clearNavigation;
             var vmBeforeNavigation = _frame.GetPageViewModel();
+
+            if (vmBeforeNavigation is IDisposable vm)
+            {
+                vm.Dispose();
+            }
+
             var navigated = _frame.Navigate(pageType, parameter);
             if (navigated)
             {

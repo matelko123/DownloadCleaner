@@ -1,15 +1,15 @@
 ﻿using DownloadCleaner.App.Activation;
 using DownloadCleaner.App.Contracts.Services;
+using DownloadCleaner.App.Contracts.Stores;
 using DownloadCleaner.App.Core.Contracts.Services;
 using DownloadCleaner.App.Core.Services;
 using DownloadCleaner.App.Helpers;
 using DownloadCleaner.App.Models;
 using DownloadCleaner.App.Notifications;
 using DownloadCleaner.App.Services;
+using DownloadCleaner.App.Stores;
 using DownloadCleaner.App.ViewModels;
-using DownloadCleaner.App.ViewModels.Controls;
 using DownloadCleaner.App.Views;
-using DownloadCleaner.App.Views.Controls;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.UI.Xaml;
@@ -68,19 +68,20 @@ public partial class App : Application
             services.AddSingleton<IActivationService, ActivationService>();
             services.AddSingleton<IPageService, PageService>();
             services.AddSingleton<INavigationService, NavigationService>();
+            services.AddSingleton<ICleanDirectoriesStore, CleanDirectoriesStore>();
 
             // Core Services
             services.AddSingleton<IFileService, FileService>();
 
             // Views and ViewModels
             services.AddTransient<MainPage>();
-            services.AddSingleton<MainViewModel>();
+            services.AddTransient<MainViewModel>();
 
             services.AddTransient<SettingsPage>();
-            services.AddSingleton<SettingsViewModel>();
+            services.AddTransient<SettingsViewModel>();
 
             services.AddTransient<ShellPage>();
-            services.AddSingleton<ShellViewModel>();
+            services.AddTransient<ShellViewModel>();
 
             // Configuration
             services.Configure<LocalSettingsOptions>(context.Configuration.GetSection(nameof(LocalSettingsOptions)));
