@@ -11,6 +11,8 @@ public class NavigationViewHeaderBehavior : Behavior<NavigationView>
 {
     private static NavigationViewHeaderBehavior? _current;
 
+    private INavigationService _navigationService;
+
     private Page? _currentPage;
 
     public DataTemplate? DefaultHeaderTemplate
@@ -52,8 +54,8 @@ public class NavigationViewHeaderBehavior : Behavior<NavigationView>
     {
         base.OnAttached();
 
-        var navigationService = App.GetService<INavigationService>();
-        navigationService.Navigated += OnNavigated;
+        _navigationService = App.GetService<INavigationService>();
+        _navigationService.Navigated += OnNavigated;
 
         _current = this;
     }
@@ -62,8 +64,7 @@ public class NavigationViewHeaderBehavior : Behavior<NavigationView>
     {
         base.OnDetaching();
 
-        var navigationService = App.GetService<INavigationService>();
-        navigationService.Navigated -= OnNavigated;
+        _navigationService.Navigated -= OnNavigated;
     }
 
     private void OnNavigated(object sender, NavigationEventArgs e)
